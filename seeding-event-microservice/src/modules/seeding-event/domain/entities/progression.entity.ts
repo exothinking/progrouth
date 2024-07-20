@@ -26,6 +26,7 @@ export class ProgressionEntity {
     if (idError) return [null, idError];
 
     const instance = new ProgressionEntity(id);
+
     instance.#playerId = props.playerId;
     instance.#seedId = props.seedId;
     instance.#seederId = props.seederId;

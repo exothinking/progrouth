@@ -37,4 +37,8 @@ export class PlayerEntity {
   get id(): string {
     return this.#id.value;
   }
+
+  get name(): string {
+    return this.#name.value;
+  }
 }

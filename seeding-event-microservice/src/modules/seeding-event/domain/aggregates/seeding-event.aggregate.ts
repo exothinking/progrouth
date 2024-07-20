@@ -74,11 +74,14 @@ export class SeedingEventAggregate {
       const [validSeedId, seedIdError] = UniqueEntityId.load(seeder.seedId);
       if (seedIdError) return [null, seedIdError];
 
+      const [validSeederId, seederIdError] = UniqueEntityId.load(seeder.id);
+      if (seederIdError) return [null, seederIdError];
+
       const [progression, progressionError] = ProgressionEntity.create({
         playerId: validPlayerId,
         seedId: validSeedId,
         seasonId: this.#seasonId,
-        seederId: this.#id,
+        seederId: validSeederId,
       });
       if (progressionError) return [null, progressionError];
 
