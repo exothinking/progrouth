@@ -4,6 +4,7 @@ import { UniqueEntityId } from '../../../../common/unique-entity-id';
 import { SeederEntity } from '../entities/seeder.entity';
 import { PlayerEntity } from '../entities/player.entity';
 import { ProgressionEntity } from '../entities/progression.entity';
+import { DomainError } from '../../../../common/errors/domain/domain.error';
 
 export type SeedingEventAggregateProps = {
   name: string | Name;
@@ -24,7 +25,7 @@ export class SeedingEventAggregate {
   static load(
     props: SeedingEventAggregateProps,
     id: UniqueEntityId,
-  ): Result<SeedingEventAggregate, Error> {
+  ): Result<SeedingEventAggregate, DomainError> {
     const instance = new SeedingEventAggregate(id);
 
     const setNameError = instance.setName(props.name);
@@ -36,7 +37,7 @@ export class SeedingEventAggregate {
     return [instance, null];
   }
 
-  setName(name: string | Name): Error | undefined {
+  setName(name: string | Name): DomainError | undefined {
     if (!(name instanceof Name)) {
       const [nameInstance, error] = Name.create(name);
       if (error) return error;
@@ -64,7 +65,7 @@ export class SeedingEventAggregate {
 
   generateProgressionsToPlayer(
     player: PlayerEntity,
-  ): Result<ProgressionEntity[], Error> {
+  ): Result<ProgressionEntity[], DomainError> {
     const progressions = [];
 
     for (const seeder of this.seeders) {

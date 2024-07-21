@@ -2,8 +2,11 @@ import { Result } from 'src/common/result.type';
 import { UniqueEntityId } from '../../../../common/unique-entity-id';
 import { PlayerEntity } from './player.entity';
 import { Name } from '../value-objects/name.vo';
+import { DomainError } from '../../../../common/errors/domain/domain.error';
 
-function makeSut(sutName: string | Name = 'name'): Result<PlayerEntity, Error> {
+function makeSut(
+  sutName: string | Name = 'name',
+): Result<PlayerEntity, DomainError> {
   const [fakePlayerId] = UniqueEntityId.create();
   const [sut, error] = PlayerEntity.load({ name: sutName }, fakePlayerId);
   return [sut, error];

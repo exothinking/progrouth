@@ -1,3 +1,4 @@
+import { DomainError } from '../../../../common/errors/domain/domain.error';
 import { Result } from 'src/common/result.type';
 
 export class Name {
@@ -5,10 +6,10 @@ export class Name {
 
   private constructor() {}
 
-  static create(value: string): Result<Name, Error> {
+  static create(value: string): Result<Name, DomainError> {
     const instance = new Name();
     if (typeof value !== 'string' || !value.length || !isNaN(Number(value)))
-      return [null, new Error('its not a string')];
+      return [null, new DomainError('its not a string')];
     instance.#value = value;
     return [instance, null];
   }

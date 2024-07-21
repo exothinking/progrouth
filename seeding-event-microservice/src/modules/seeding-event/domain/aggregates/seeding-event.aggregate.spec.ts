@@ -5,10 +5,11 @@ import { SeederEntity } from '../entities/seeder.entity';
 import { PlayerEntity } from '../entities/player.entity';
 import { ProgressionEntity } from '../entities/progression.entity';
 import { Name } from '../value-objects/name.vo';
+import { DomainError } from '../../../../common/errors/domain/domain.error';
 
 function makeSut(
   sutName: string | Name = 'name',
-): Result<SeedingEventAggregate, Error> {
+): Result<SeedingEventAggregate, DomainError> {
   const [fakeSeedId] = UniqueEntityId.create();
   const [fakeSeederId] = UniqueEntityId.create();
   const [seeder] = SeederEntity.load(
@@ -25,7 +26,9 @@ function makeSut(
   return [sut, sutError];
 }
 
-function makeInvalidSut(badProp: string): Result<SeedingEventAggregate, Error> {
+function makeInvalidSut(
+  badProp: string,
+): Result<SeedingEventAggregate, DomainError> {
   const [fakeSeedId] = UniqueEntityId.create();
   const [fakeSeederId] = UniqueEntityId.create();
   const [fakeSutId] = UniqueEntityId.create();
@@ -128,7 +131,7 @@ describe('SeedingEventAggregate', () => {
       const [player] = PlayerEntity.load({ name: 'PlayerName' }, fakePlayerId);
       jest
         .spyOn(ProgressionEntity, 'create')
-        .mockReturnValue([null, new Error('something wrong')]);
+        .mockReturnValue([null, new DomainError('something wrong')]);
       const [progressions, error] = sut.generateProgressionsToPlayer(player);
       expect(progressions).toBeNull();
       expect(error).not.toBeNull();

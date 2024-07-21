@@ -1,8 +1,9 @@
 import { UniqueEntityId } from '../../../../common/unique-entity-id';
 import { ProgressionEntity } from './progression.entity';
 import { Result } from '../../../../common/result.type';
+import { DomainError } from '../../../../common/errors/domain/domain.error';
 
-function makeSut(): Result<ProgressionEntity, Error> {
+function makeSut(): Result<ProgressionEntity, DomainError> {
   const [fakePlayerId] = UniqueEntityId.create();
   const [fakeSeasonId] = UniqueEntityId.create();
   const [fakeSeederId] = UniqueEntityId.create();
@@ -28,11 +29,11 @@ describe('ProgressionEntity', () => {
     it('should return an error if something goes wrong with UniqueEntityId', () => {
       jest
         .spyOn(UniqueEntityId, 'create')
-        .mockReturnValueOnce([null, new Error('something wrong')])
-        .mockReturnValueOnce([null, new Error('something wrong')])
-        .mockReturnValueOnce([null, new Error('something wrong')])
-        .mockReturnValueOnce([null, new Error('something wrong')])
-        .mockReturnValueOnce([null, new Error('something wrong')]);
+        .mockReturnValueOnce([null, new DomainError('something wrong')])
+        .mockReturnValueOnce([null, new DomainError('something wrong')])
+        .mockReturnValueOnce([null, new DomainError('something wrong')])
+        .mockReturnValueOnce([null, new DomainError('something wrong')])
+        .mockReturnValueOnce([null, new DomainError('something wrong')]);
       const [sut, error] = makeSut();
       expect(sut).toBeNull();
       expect(error).not.toBeNull();
