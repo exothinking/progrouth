@@ -1,27 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { SeedingEventRepository } from '../../domain/repository-interfaces/seeding-event.repository';
+import { PlayerRepository } from '../../domain/repository-interfaces/player.repository';
+import { ProgressionRepository } from '../../domain/repository-interfaces/progression.repository';
 import { Result } from 'src/common/result.type';
-import { SeedingEventAggregate } from '../domain/aggregates/seeding-event.aggregate';
-import { PlayerEntity } from '../domain/entities/player.entity';
-import { ProgressionEntity } from '../domain/entities/progression.entity';
 import { DataValidationError } from 'src/common/errors/application/data-validation.error';
 import { UnknownError } from 'src/common/errors/unknown.error';
-import { DomainError } from '../../../common/errors/domain/domain.error';
-
-export interface SeedingEventRepository {
-  findEventById(
-    eventId: string,
-  ): Promise<Result<SeedingEventAggregate, DomainError>>;
-}
-
-export interface PlayerRepository {
-  findPlayerById(eventId: string): Promise<Result<PlayerEntity, DomainError>>;
-}
-
-export interface ProgressionRepository {
-  saveProgressions(
-    progressions: ProgressionEntity[],
-  ): Promise<Result<void, DomainError>>;
-}
 
 export type SeedingEventMessage = {
   eventId: string;
@@ -29,14 +12,14 @@ export type SeedingEventMessage = {
 };
 
 @Injectable()
-export class SeedingEventConsumer {
+export class CreateProgressionUseCase {
   constructor(
     private readonly eventRepo: SeedingEventRepository,
     private readonly playerRepo: PlayerRepository,
     private readonly progressionsRepo: ProgressionRepository,
   ) {}
 
-  async consumeSQSSeedingEvent(message: SeedingEventMessage) {
+  async execute(message: SeedingEventMessage) {
     const [body, parseBodyError] = this.parseMessage(message);
     if (parseBodyError?.isUnknown()) {
       return;
