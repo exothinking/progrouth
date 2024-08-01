@@ -2,6 +2,7 @@ import { Result } from 'src/common/result.type';
 import { Name } from '../value-objects/name.vo';
 import { UniqueEntityId } from 'src/common/unique-entity-id';
 import { DomainError } from '../../../../common/errors/domain/domain.error';
+import { IError } from 'src/common/errors/error.interface';
 
 export type PlayerEntityProps = {
   name: string | Name;
@@ -18,7 +19,7 @@ export class PlayerEntity {
   static load(
     props: PlayerEntityProps,
     id: UniqueEntityId,
-  ): Result<PlayerEntity, DomainError> {
+  ): Result<PlayerEntity, IError> {
     const instance = new PlayerEntity(id);
     const setNameError = instance.setName(props.name);
     if (setNameError) return [null, setNameError];

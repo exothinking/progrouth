@@ -1,3 +1,4 @@
+import { IError } from 'src/common/errors/error.interface';
 import { DomainError } from '../../../../common/errors/domain/domain.error';
 import { Result } from 'src/common/result.type';
 
@@ -6,7 +7,7 @@ export class Name {
 
   private constructor() {}
 
-  static create(value: string): Result<Name, DomainError> {
+  static create(value: string): Result<Name, IError> {
     const instance = new Name();
     if (typeof value !== 'string' || !value.length || !isNaN(Number(value)))
       return [null, new DomainError('its not a string')];

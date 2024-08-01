@@ -6,10 +6,11 @@ import { PlayerEntity } from '../entities/player.entity';
 import { ProgressionEntity } from '../entities/progression.entity';
 import { Name } from '../value-objects/name.vo';
 import { DomainError } from '../../../../common/errors/domain/domain.error';
+import { IError } from 'src/common/errors/error.interface';
 
 function makeSut(
   sutName: string | Name = 'name',
-): Result<SeedingEventAggregate, DomainError> {
+): Result<SeedingEventAggregate, IError> {
   const [fakeSeedId] = UniqueEntityId.create();
   const [fakeSeederId] = UniqueEntityId.create();
   const [seeder] = SeederEntity.load(
@@ -28,7 +29,7 @@ function makeSut(
 
 function makeInvalidSut(
   badProp: string,
-): Result<SeedingEventAggregate, DomainError> {
+): Result<SeedingEventAggregate, IError> {
   const [fakeSeedId] = UniqueEntityId.create();
   const [fakeSeederId] = UniqueEntityId.create();
   const [fakeSutId] = UniqueEntityId.create();

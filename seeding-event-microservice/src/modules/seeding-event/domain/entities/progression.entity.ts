@@ -1,6 +1,7 @@
 import { Result } from 'src/common/result.type';
 import { UniqueEntityId } from '../../../../common/unique-entity-id';
 import { DomainError } from '../../../../common/errors/domain/domain.error';
+import { IError } from 'src/common/errors/error.interface';
 
 export type ProgressionEntityProps = {
   playerId: UniqueEntityId;
@@ -22,7 +23,7 @@ export class ProgressionEntity {
 
   static create(
     props: ProgressionEntityProps,
-  ): Result<ProgressionEntity, DomainError> {
+  ): Result<ProgressionEntity, IError> {
     const [id, idError] = UniqueEntityId.create();
     if (idError) return [null, idError];
 

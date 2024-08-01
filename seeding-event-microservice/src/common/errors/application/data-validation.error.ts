@@ -1,5 +1,5 @@
-import { BaseError } from '../base.error';
+import { KnownError } from '../known.error';
 
-export class DataValidationError extends BaseError {
+export class DataValidationError extends KnownError {
   name = 'DataValidationError';
 }

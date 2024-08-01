@@ -1,16 +1,17 @@
-import { UnknownError } from './unknown.error';
+import { IError } from './error.interface';
 
-export class BaseError extends Error {
+export abstract class KnownError extends Error implements IError {
+  isUnknown: boolean = false;
+
   constructor(message?: string) {
     super(message);
   }
+
   is(type: any) {
     return this instanceof type;
   }
+
   isNot(type: any) {
     return !(this instanceof type);
-  }
-  isUnknown() {
-    return this instanceof UnknownError;
   }
 }

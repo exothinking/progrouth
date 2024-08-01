@@ -2,8 +2,9 @@ import { UniqueEntityId } from '../../../../common/unique-entity-id';
 import { ProgressionEntity } from './progression.entity';
 import { Result } from '../../../../common/result.type';
 import { DomainError } from '../../../../common/errors/domain/domain.error';
+import { IError } from 'src/common/errors/error.interface';
 
-function makeSut(): Result<ProgressionEntity, DomainError> {
+function makeSut(): Result<ProgressionEntity, IError> {
   const [fakePlayerId] = UniqueEntityId.create();
   const [fakeSeasonId] = UniqueEntityId.create();
   const [fakeSeederId] = UniqueEntityId.create();

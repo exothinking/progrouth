@@ -1,3 +1,4 @@
+import { IError } from './errors/error.interface';
 import { DomainError } from './errors/domain/domain.error';
 import { UnknownError } from './errors/unknown.error';
 import { Result } from './result.type';
@@ -7,7 +8,7 @@ export class UniqueEntityId {
 
   private constructor() {}
 
-  static create(): Result<UniqueEntityId, DomainError> {
+  static create(): Result<UniqueEntityId, IError> {
     try {
       const instance = new UniqueEntityId();
       instance.#value = crypto.randomUUID();
@@ -17,7 +18,7 @@ export class UniqueEntityId {
     }
   }
 
-  static load(value: string): Result<UniqueEntityId, DomainError> {
+  static load(value: string): Result<UniqueEntityId, IError> {
     const instance = new UniqueEntityId();
     if (typeof value !== 'string')
       return [null, new DomainError('Unique Entity Id must be string')];

@@ -1,5 +1,9 @@
-export class UnknownError extends Error {
+import { IError } from './error.interface';
+
+export class UnknownError extends Error implements IError {
+  isUnknown: boolean = true;
   name = 'UnknownError';
+
   constructor(error: any) {
     super(error?.message);
     this.stack =
@@ -8,13 +12,12 @@ export class UnknownError extends Error {
         `${this.name}<${error?.name}>: `,
       ) || 'unknown stack';
   }
+
   is(type: any) {
     return this instanceof type;
   }
+
   isNot(type: any) {
     return !(this instanceof type);
-  }
-  isUnknown() {
-    return true;
   }
 }

@@ -3,10 +3,11 @@ import { UniqueEntityId } from '../../../../common/unique-entity-id';
 import { PlayerEntity } from './player.entity';
 import { Name } from '../value-objects/name.vo';
 import { DomainError } from '../../../../common/errors/domain/domain.error';
+import { IError } from 'src/common/errors/error.interface';
 
 function makeSut(
   sutName: string | Name = 'name',
-): Result<PlayerEntity, DomainError> {
+): Result<PlayerEntity, IError> {
   const [fakePlayerId] = UniqueEntityId.create();
   const [sut, error] = PlayerEntity.load({ name: sutName }, fakePlayerId);
   return [sut, error];

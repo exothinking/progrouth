@@ -2,6 +2,7 @@ import { Result } from 'src/common/result.type';
 import { Name } from '../value-objects/name.vo';
 import { UniqueEntityId } from 'src/common/unique-entity-id';
 import { DomainError } from 'src/common/errors/domain/domain.error';
+import { IError } from 'src/common/errors/error.interface';
 
 export type SeederEntityProps = {
   name: string | Name;
@@ -20,7 +21,7 @@ export class SeederEntity {
   static load(
     props: SeederEntityProps,
     id: UniqueEntityId,
-  ): Result<SeederEntity, DomainError> {
+  ): Result<SeederEntity, IError> {
     const instance = new SeederEntity(id);
 
     const setNameError = instance.setName(props.name);

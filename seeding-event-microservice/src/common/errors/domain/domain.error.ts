@@ -1,5 +1,5 @@
-import { BaseError } from '../base.error';
+import { KnownError } from '../known.error';
 
-export class DomainError extends BaseError {
+export class DomainError extends KnownError {
   name = 'DomainError';
 }
