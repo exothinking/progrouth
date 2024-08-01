@@ -2,6 +2,6 @@
 export interface LoggerService {
   info(message: string): void;
   warn(message: string): void;
-  error(message: string, stack: string): void;
+  error(stack: string): void;
   release(): Promise<void>;
 }
